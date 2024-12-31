@@ -1,7 +1,7 @@
 import CustomButton from "@/components/CustomButton";
 import InputField from "@/components/InputField";
 import { Logo } from "@/Constant/images";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { useState } from "react";
 import { Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -41,12 +41,12 @@ const SignIn = () => {
             labelText="Password"
             inputType="password"
           />
-          <CustomButton title="Sign In" />
+          <CustomButton handlePress={()=>router.push("/Home")} title="Sign In" />
           <Text className="text-center font-pregular text-gray-100 mt-4 text-lg">
             Don’t have an account?{" "}
             <Link
               href="/(auth)/SignUp"
-              className="font-psemibold ?text-secondary"
+              className="font-psemibold text-secondary"
             >
               Signup
             </Link>
