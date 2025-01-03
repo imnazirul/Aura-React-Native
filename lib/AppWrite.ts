@@ -32,7 +32,7 @@ export const CreateUser = async(email:string, password:string, username:string)=
     
         const avatarUrl = avatar.getInitials(newAccount.name);
     
-        // await signIn(email, password);
+        await signIn(newAccount.$id, password);
     
         const newUser = await databases.createDocument(
           appwriteConfig.databaseId,
@@ -48,6 +48,15 @@ export const CreateUser = async(email:string, password:string, username:string)=
         );
     
         return newUser;
+      } catch (error) {
+        throw new Error(error instanceof Error ? error.message : String(error));
+      }
+}
+
+export const signIn = async(username:string, password:string)=>{
+    try {
+        const response = await account.createSession(username, password);
+        return response;
       } catch (error) {
         throw new Error(error instanceof Error ? error.message : String(error));
       }
