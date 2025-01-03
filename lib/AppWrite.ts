@@ -1,4 +1,4 @@
-import { Client, Account, ID, Avatars, Databases } from 'react-native-appwrite';
+import { Client, Account, ID, Avatars, Databases, Query } from 'react-native-appwrite';
 
 export const appwriteConfig = {
     endpoint: "https://cloud.appwrite.io/v1",
@@ -55,9 +55,52 @@ export const CreateUser = async(email:string, password:string, username:string)=
 
 export const signIn = async(username:string, password:string)=>{
     try {
-        const response = await account.createSession(username, password);
+        const response = await account.createEmailPasswordSession(username, password);
         return response;
       } catch (error) {
         throw new Error(error instanceof Error ? error.message : String(error));
       }
+}
+
+// Get Account
+export async function getAccount() {
+  try {
+    const currentAccount = await account.get();
+
+    return currentAccount;
+  } catch (error:any) {
+    throw new Error(error);
+  }
+}
+
+// Get Current User
+export async function getCurrentUser() {
+  try {
+    const currentAccount = await getAccount();
+    if (!currentAccount) throw Error;
+
+    const currentUser = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      [Query.equal("accountId", currentAccount.$id)]
+    );
+
+    if (!currentUser) throw Error;
+
+    return currentUser.documents[0];
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+// Sign Out
+export async function signOut() {
+  try {
+    const session = await account.deleteSession("current");
+
+    return session;
+  } catch (error:any) {
+    throw new Error(error);
+  }
 }
