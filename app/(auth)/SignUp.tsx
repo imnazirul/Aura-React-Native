@@ -1,9 +1,10 @@
 import CustomButton from "@/components/CustomButton";
 import InputField from "@/components/InputField";
 import { Logo } from "@/Constant/images";
-import { CreateUser } from "@/lib/AppWrite";
+import useGlobalContext from "@/context/useContext";
+import { CreateUser, getCurrentUser } from "@/lib/AppWrite";
 import { Link, router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -13,7 +14,7 @@ const SignUp = () => {
     email: "",
     password: "",
   });
-  console.log(userData);
+  const {user, setUser} = useGlobalContext()
 
   const handleSignUp = async () => {
     if (userData.username || userData.email || userData.password) {
@@ -23,7 +24,8 @@ const SignUp = () => {
           userData.password,
           userData.username
         );
-        // console.log(results);
+        const result = await getCurrentUser()
+        setUser(result)
         router.replace("/Home");
       } catch (err:any) {
         // console.log(err.message);
@@ -33,6 +35,13 @@ const SignUp = () => {
       return Alert.alert("Error", "Please Fill Up the Form First");
     }
   };
+
+  useEffect(()=>{
+    if(user){
+      router.replace("/Home")
+    }
+  },[user]) 
+
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>

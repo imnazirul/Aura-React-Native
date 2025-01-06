@@ -1,13 +1,22 @@
-import { Link, router } from "expo-router";
+import { Link, Redirect, router } from "expo-router";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { StatusBar } from "expo-status-bar";
 import { CardImage, Logo, Path } from "@/Constant/images";
+import useGlobalContext from "@/context/useContext";
+import Loader from "@/components/Loader";
+import { useEffect } from "react";
 
 const App = () => {
+  const {user, isLoading} = useGlobalContext()
+  
+  // console.log(user, isLoading);
+  useEffect(()=>{if(!isLoading && user) router.replace("/Home")},[isLoading, user])
+  
   return (
     <SafeAreaView className="bg-primary h-full">
+      <Loader isLoading={isLoading}/>
       <ScrollView>
         <View className="mt-8 flex justify-center items-center">
           <View className="flex-row gap-1 w-[120px] justify-center items-center">

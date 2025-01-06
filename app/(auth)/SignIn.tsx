@@ -1,14 +1,16 @@
 import CustomButton from "@/components/CustomButton";
 import InputField from "@/components/InputField";
 import { Logo } from "@/Constant/images";
-import { signIn } from "@/lib/AppWrite";
+import useGlobalContext from "@/context/useContext";
+import { getCurrentUser, signIn } from "@/lib/AppWrite";
 import { Link, router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const {user,setUser, setIsLoggedIn} = useGlobalContext()
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -18,7 +20,10 @@ const SignIn = () => {
     setIsLoading(true);
     try {
       const response = await signIn(userData.email, userData.password);
-      console.log(response);
+      const results = await getCurrentUser()
+      setUser(results);
+      setIsLoggedIn(true);
+      router.replace("/Home");
     }catch(err:any){
       console.log(err);
       Alert.alert("Error", err? err.message : "Something Went Wrong");
@@ -29,6 +34,13 @@ const SignIn = () => {
     return Alert.alert("Error", "Please Fill Up the Form First");
   }
 }
+
+useEffect(()=>{
+  if(user){
+    router.replace("/Home")
+  }
+},[user]) 
+
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>

@@ -32,7 +32,7 @@ export const CreateUser = async(email:string, password:string, username:string)=
     
         const avatarUrl = avatar.getInitials(newAccount.name);
     
-        await signIn(newAccount.$id, password);
+        await signIn(email, password);
     
         const newUser = await databases.createDocument(
           appwriteConfig.databaseId,
