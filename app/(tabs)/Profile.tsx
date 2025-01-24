@@ -28,14 +28,29 @@ const Profile = () => {
           <Image source={{uri:user?.avatar}} className='w-16 h-16 rounded-md'/>
           <Text className='text-white font-psemibold text-lg mt-1'>{user?.username}</Text>
          </View>
-         <Checkbox
+         {/* <Checkbox
           // style={styles.checkbox}
           // value={isChecked}
           // onValueChange={setChecked}
           color={isChecked ? '#4630EB' : undefined}
-        />
-         <View>
-          <View><Text></Text></View>
+        /> */}
+         <View className='flex justify-center flex-row gap-16 text-center mt-8'>
+          <View>
+            <Text className='text-xl text-center font-semibold text-white mt-4'>
+              10
+            </Text>
+            <Text className='text-lg text-center font-medium text-white'>
+              Posts
+              </Text>
+            </View>
+          <View>
+            <Text className='text-xl text-center font-semibold text-white mt-4'>
+              1.2K 
+            </Text>
+            <Text className='text-lg text-center font-medium text-white'>
+            Views
+              </Text>
+            </View>
          </View>
        </SafeAreaView>
   )
