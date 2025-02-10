@@ -15,9 +15,13 @@ import InputField from "@/components/InputField";
 import * as DocumentPicker from "expo-document-picker";
 import icons from "@/Constant/icons";
 import CustomButton from "@/components/CustomButton";
+import { createVideoPost } from "@/lib/AppWrite";
+import useGlobalContext from "@/context/useContext";
+import { router } from "expo-router";
 
 const Create = () => {
   const [uploading, setUploading] = useState(false);
+  const {user} = useGlobalContext()
   const [form, setForm] = useState<any>({
     title: "",
     video: null,
@@ -48,6 +52,41 @@ const Create = () => {
     player.play();
   });
 
+  const submit = async () => {
+    console.log(form);
+    if (
+      (!form.prompt) ||
+      (!form.title) ||
+      !form.thumbnail ||
+      !form.video
+    ) {
+      return Alert.alert("Please provide all fields");
+    }
+
+    setUploading(true);
+    try {
+      await createVideoPost({
+        ...form,
+        userId: user.$id,
+      });
+
+      Alert.alert("Success", "Post uploaded successfully");
+      router.push("/Home");
+    } catch (error:any) {
+      Alert.alert("Error", error.message);
+    } finally {
+      setForm({
+        title: "",
+        video: null,
+        thumbnail: null,
+        prompt: "",
+      });
+
+      setUploading(false);
+    }
+  };
+
+
   return (
     <SafeAreaView className=" bg-primary  ">
       <ScrollView className="px-6 h-full ">
@@ -59,6 +98,8 @@ const Create = () => {
         <View className="mb-8">
           <InputField
             InputClassName="flex-1 w-full placeholder:text-gray-500"
+            value={form.title}
+            onChange={(e: any) => setForm({ ...form, title: e })}
             ClassName="flex-1"
             labelText="Video Title"
             placeholder="Give your video a catchy Title"
@@ -127,16 +168,17 @@ const Create = () => {
           <InputField
             ClassName="mt-2"
             labelText="AI Prompt"
-            value={form.prompt}
+            
             placeholder="The AI prompt of your video"
-            handleChangeText={(e: any) => setForm({ ...form, prompt: e })}
+            value={form.prompt}
+            onChange={(e: any) => setForm({ ...form, prompt: e })}
             InputClassName="flex-1 w-full placeholder:text-gray-500"
           />
 
           <CustomButton
             title="Submit & Publish"
-            // handlePress={submit}
-            // containerStyles="mt-7"
+             handlePress={submit}
+            containerStyle="mt-7"
             isLoading={uploading}
           />
         </View>

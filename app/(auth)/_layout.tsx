@@ -2,7 +2,7 @@ import { SplashScreen, Stack } from "expo-router";
 
 SplashScreen.preventAutoHideAsync();
 
-const RootLayout = () => {
+const AuthLayout = () => {
     return (
         <Stack>
           <Stack.Screen name="SignIn" options={{headerShown:false}}  />    
@@ -11,4 +11,4 @@ const RootLayout = () => {
     );
 };
 
-export default RootLayout;
+export default AuthLayout;

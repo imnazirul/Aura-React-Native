@@ -9,7 +9,7 @@ import GlobalProvider from "@/context/GlobalProvider";
 
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
+ const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
     "Poppins-Black": require("../assets/fonts/Poppins-Black.ttf"),
     "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
@@ -49,3 +49,4 @@ export default function RootLayout() {
     </GlobalProvider>
   );
 }
+export default RootLayout;

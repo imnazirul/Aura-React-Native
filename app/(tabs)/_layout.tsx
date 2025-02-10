@@ -14,7 +14,7 @@ const TabIcon = ({icon, color, name, focused}:{icon: any, color: string, name: s
   );
 };
 
-const _layout = () => {
+const TabLayout = () => {
   return (
     <Tabs screenOptions={{  tabBarActiveTintColor: "#FFA001",
       tabBarInactiveTintColor: "#CDCDE0",
@@ -41,7 +41,7 @@ const _layout = () => {
            />
          ),
          
-       }}
+        }}
       //  listeners={{
       //   tabPress: () => {
       //     if (router.canDismiss()) {
@@ -49,6 +49,14 @@ const _layout = () => {
       //     }
       //   },}}
       />
+        <Tabs.Screen
+          name="Explore"
+          options={{
+            title: "Explore",
+            headerShown: false,
+            tabBarIcon: ({color,focused})=> <TabIcon color={color} focused={focused} icon={icons.explore} name="Explore" />
+          }}
+        />
       <Tabs.Screen
         name="Create"
         options={{
@@ -69,4 +77,4 @@ const _layout = () => {
   );
 };
 
-export default _layout;
+export default TabLayout;
