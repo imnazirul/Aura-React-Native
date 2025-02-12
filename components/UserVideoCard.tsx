@@ -4,7 +4,7 @@ import icons from "@/Constant/icons";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { useEvent } from "expo";
 
-const VideoCard = ({ videoData }: { videoData: any }) => {
+const UserVideoCard = ({ videoData }: { videoData: any }) => {
   const {
     title,
     thumbnail,
@@ -22,24 +22,24 @@ const VideoCard = ({ videoData }: { videoData: any }) => {
 
   useEffect(() => {
     if (!isPlaying) {
-      setPlay(false);
+            setPlay(false);    
     }
   }, [isPlaying]);
 
-  useEffect(() => {
+  useEffect(()=>{
     if (play) {
-      player.play();
-    }
-  }, [play]);
+        player.play();
+      }
+  },[play])
 
   return (
     <View className="mb-4 px-4">
       <View className="flex flex-row gap-2 justify-between">
         <View className="flex-row gap-2">
-          <Image
+          {/* <Image
             source={{ uri: avatar }}
             className="border-yellow-500 border-2 rounded-sm size-12"
-          />
+          /> */}
           <View className="flex ">
             <Text className="text-white font-psemibold text-pse">
               {title.slice(0, 30)}
@@ -79,7 +79,7 @@ const VideoCard = ({ videoData }: { videoData: any }) => {
   );
 };
 
-export default VideoCard;
+export default UserVideoCard;
 
 const styles = StyleSheet.create({
   video: {

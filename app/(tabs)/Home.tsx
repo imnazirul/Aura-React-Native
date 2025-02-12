@@ -55,9 +55,8 @@ const Home = () => {
             </View>
           );
         }}
-        ListEmptyComponent={()=>(
-          <EmptyState title="No Videos Found!" subtitle="Be the first one to upload a video " />
-        )}
+        ListEmptyComponent={()=>{ if(!loading) {return<EmptyState title="No Videos Found!" subtitle="Be the first one to upload a video " />}}
+        }
         refreshControl={<RefreshControl refreshing={loading} onRefresh={onRefresh}/>}
       />
     </SafeAreaView>

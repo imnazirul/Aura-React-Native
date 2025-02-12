@@ -21,12 +21,12 @@ SplashScreen.preventAutoHideAsync();
     "Poppins-SemiBold": require("../assets/fonts/Poppins-SemiBold.ttf"),
     "Poppins-Thin": require("../assets/fonts/Poppins-Thin.ttf"),
   });
+  SplashScreen.hideAsync();
 
   useEffect(() => {
     if (error) throw error;
 
     if (fontsLoaded) {
-      SplashScreen.hideAsync();
     }
   }, [fontsLoaded, error]);
 
@@ -42,6 +42,8 @@ SplashScreen.preventAutoHideAsync();
     <GlobalProvider>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
+        {/* <Stack.Screen name="SplashScreen" options={{ headerShown: false }} /> */}
+        <Stack.Screen name="App" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="Profile" options={{headerTitle:"User Profile" }} />
