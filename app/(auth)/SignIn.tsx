@@ -26,9 +26,11 @@ const SignIn = () => {
       router.replace("/Home");
     }catch(err:any){
       console.log(err);
-      Alert.alert("Error", err? err.message : "Something Went Wrong");
+      Alert.alert("Warning", err? err.message : "Something Went Wrong");
+      router.replace("/Home");
     }finally{
       setIsLoading(false);
+      router.replace("/Home");
     }
   }else{
     return Alert.alert("Error", "Please Fill Up the Form First");

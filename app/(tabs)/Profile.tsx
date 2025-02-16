@@ -27,10 +27,10 @@ const Profile = () => {
   } = useAppwrite(() => getUserPosts(user?.$id));
 
   const handleLogOut = async () => {
+    router.replace("/(auth)/SignIn");
     await signOut();
     setUser(null);
     setIsLoggedIn(false);
-    router.replace("/(auth)/SignIn");
   };
 
   const onRefresh = async () => {

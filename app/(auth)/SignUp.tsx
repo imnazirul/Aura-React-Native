@@ -29,7 +29,7 @@ const SignUp = () => {
         router.replace("/Home");
       } catch (err:any) {
         // console.log(err.message);
-        Alert.alert("Error", err? err.message : "Something Went Wrong");
+        Alert.alert("Warning", err? err.message : "Something Went Wrong");
       }
     } else {
       return Alert.alert("Error", "Please Fill Up the Form First");
